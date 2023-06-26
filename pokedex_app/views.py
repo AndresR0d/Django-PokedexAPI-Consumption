@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from pokedex_app.models import Pokemon
+from django.http import JsonResponse
 
-# Create your views here.
 def pokemon_list(request):
-    pokemon_list = Pokemon.objects.all()
-    print(pokemon_list)
+    pokemons = Pokemon.objects.all()
+    data = {
+        'pokemons': list(pokemons.values())
+    }
+    return JsonResponse(data)
