@@ -8,3 +8,14 @@ def pokemon_list(request):
         'pokemons': list(pokemons.values())
     }
     return JsonResponse(data)
+
+def pokemon_details(request, pk):
+    pokemon = Pokemon.objects.get(pk=pk)
+    data = {
+        'name': pokemon.name,
+        'type1': pokemon.type1,
+        'type2': pokemon.type2,
+        'abilities': pokemon.abilities,
+        'stats': pokemon.stats
+    }
+    return JsonResponse(data)
