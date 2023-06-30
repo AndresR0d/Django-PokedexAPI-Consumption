@@ -2,23 +2,30 @@ from django.db import models
 from django.core.serializers import serialize
 
 class Pokemon(models.Model):
+    id = models.AutoField()
     name = models.CharField(max_length=50)
-    type1 = models.CharField(max_length=50, default=None, null=False)
-    type2 = models.CharField(max_length=50, blank=True, null=True)
-    abilities = models.TextField(blank=False, null=True)
-    stats = models.TextField(blank=False, null=True)
+    base_experience = models.IntegerField()
+    height = models.IntegerField()
+    order = models.IntegerField()
+    weight = models.IntegerField()
+    
 
-    def set_abilities(self, abilities):
-        self.abilities = serialize('json', abilities)
+class Ability(models.Model):
+    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name='abilitites')
+    name = models.CharField()
+    is_hidden = models.BooleanField()
+    slot = models.IntegerField()
+    ability = 
 
-    def get_abilities(self):
-        return list(serialize('json', self.abilities))
+class Type(models.Model):
+    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name='types')
+    slot = models.IntegerField()
+    name = models.CharField(max_length=50)
+    url = models.URLField()
 
-    def set_stats(self, stats):
-        self.stats = serialize('json', stats)
-
-    def get_stats(self):
-        return list(serialize('json'),self.stats)
-
-    def __str__(self):
-        return self.name
+class Stat(models.Model):
+    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name='stats')
+    base_stat = models.IntegerField()
+    effort = models.IntegerField()
+    name = models.CharField(max_length=50)
+    url = models.URLField()
