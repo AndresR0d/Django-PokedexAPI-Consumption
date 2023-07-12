@@ -8,14 +8,13 @@ class Pokemon(models.Model):
     height = models.IntegerField()
     order = models.IntegerField()
     weight = models.IntegerField()
-    
+    abilities = models.ManyToManyField('Ability', related_name='pokemons')
 
 class Ability(models.Model):
     pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name='abilitites')
-    name = models.CharField()
-    is_hidden = models.BooleanField()
+    name = models.CharField(max_length=100)
+    is_hidden = models.BooleanField(default=False)
     slot = models.IntegerField()
-    ability = 
 
 class Type(models.Model):
     pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name='types')
